@@ -1,0 +1,7 @@
+# Configurations for AA accounting system
+send_mail_switch: true
+log_file : balance.log
+database_file : balance.tbl
+domain : "@tencent.com"
+admin_mail : "zwxiao@tencent.com"
+smtp_server : 192.168.1.27

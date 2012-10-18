@@ -1,0 +1,26 @@
+$def with (page)
+
+<html>
+<head>
+    <title>AA</title>
+    <style>
+      /* horizontal list  */
+      #menu li {
+          list-style-type: none;
+          padding-right: 20px;
+          display: inline;
+      }
+    </style>
+</head>
+
+<body>
+<ul id="menu">
+    <li><a href="/new">填单子</a></li>
+    <li><a href="/show">排行榜</a></li>
+    <li><a href="/log">详细日志</a></li>
+</ul>
+
+$:page
+
+</body>
+</html>

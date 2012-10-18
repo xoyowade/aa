@@ -1,0 +1,35 @@
+$def with (recs, info)
+
+<h3>填单啦</h3>
+
+$if info.submit_ok : <em>提交成功</em> <br /><em>$info.written_log</em>
+
+<form action="" name="main" method="post"> 
+
+<div> $info.date 
+ <select name="am">
+  <option value="AM" 
+$if info.am == "AM": selected="selected"
+>AM</option>
+  <option value="PM"
+$if info.am == "PM": selected="selected"
+>PM</option>
+</select>
+
+<label for="addr">于</label><input type="text" name="addr" value="第三极"/>
+
+</ul>
+$for rec in recs: <li><input type="checkbox" id="${rec.recno}_${rec.id}_in" name="${rec.recno}_${rec.id}_in"/><input type="text" name="${rec.recno}_${rec.id}_balance" size="5" /><label for="${rec.recno}_${rec.id}_in">$rec.name ($rec.id)</label></li>
+</ul>
+<input type="submit" />
+</div>
+</form>
+
+<h4>使用方法</h4>
+<div>请在出款人对应的输入框填写总金额，再把其他参与人勾上，点提交。</div>
+<div>比如今天中午霍洪鹏，梁思毓和卫望在第三极吃饭，梁思毓付了70，那么就由梁思毓来填单。<br />
+时间选“AM”；<br />
+时间后面的文本框是地点，填“第三极”（也可忽略）；<br />
+梁思毓对应的文本框填“70”；<br />
+卫望和霍洪鹏对应的勾选框“勾上”；<br />
+再点提交就可以啦。</div>

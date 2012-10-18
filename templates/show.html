@@ -1,0 +1,8 @@
+$def with (recs, info)
+<div>
+<h3>本日榜单</h3>
+<ul>
+$for rec in recs: <li>$rec.name ($rec.id): $rec.balance 元</li>
+<ul>
+</div>
+
