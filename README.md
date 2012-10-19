@@ -1,7 +1,7 @@
 # AA accounting system
 
 AA is a Chinese term for "Going Dutch", which means persons participating a common activity pay for themselves.   
-AA accounting system comes out to help a constant group of people to record their regular actives (f.g. having lunch with colleagues in work day) and split the bills automatically. After each activity, AA would record the bill, update account for every person involved, and send a mail to inform every one of the latest updates.
+AA accounting system comes out to help a constant group of people to record their regular activities (f.g. having lunch with colleagues in work day) and split the bills automatically. After each activity, AA would record the bill, update account for every person involved, and send a mail to inform every one of the latest updates.
 
 # Prerequisites
 
