@@ -6,6 +6,7 @@ import data
 import web
 import time
 import utils
+import sys
 from time import strftime
 
 ### Url mappings
@@ -17,7 +18,7 @@ urls = (
     '/log', 'Log',
 )
 
-render = web.template.render('templates', base='base')
+#render = web.template.render('templates', base='base')
 
 class Record(object): pass
 
@@ -113,6 +114,14 @@ class Log:
                 yield line + "</br>"
 
 if __name__=="__main__":
+    # load configuration
+    if len(sys.argv) > 2:
+        conf_file = sys.argv[2]
+    else:
+        conf_file = 'aa.yml'
+    conf.load(conf_file)
+    print "load %s" % conf_file
+
     app = web.application(urls, globals())
     web.internalerror = web.debugerror
     app.run()
