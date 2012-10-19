@@ -21,7 +21,7 @@ python data.py $NAME_LIST_FILE
 
 1. Edit `aa.yml` to configue your own AA system.
 
-2. Run server. Port is optional, default 80. 
+2. Run server. Port is optional, default 8080. 
 ```
 python index.py $PORT &>$AA_LOG &
 ```
