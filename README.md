@@ -17,9 +17,9 @@ AA accounting system comes out to help a constant group of people to record thei
 
 1. Create a name list file, which consists of each user's id and name ( Separated with TAB, one record one line, as in `sample_name_list` ).
 
-2. Execute `data.py` to initialize database with the name list.  
+2. Initialize database with the name list, which would clear all the old data in database and activity log.   
 ```
-python data.py $NAME_LIST_FILE
+python index.py -g -l <path-to-name-list-file>
 ```
 
 # Run Server

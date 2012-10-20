@@ -2,8 +2,8 @@
 
 """ AA accounting system """
 
-import sys
 from optparse import OptionParser
+import sys
 from time import strftime, localtime
 
 import web
@@ -123,16 +123,32 @@ if __name__=="__main__":
       default="0.0.0.0:8080", help="set ip and port to bind [default: %default]")
     parser.add_option("-c", "--config", type="string", dest="conf_file",
       default="aa.yml", help="set path to the configuration file [default: %default]")
+    parser.add_option("-g", "--generate_database", action="store_true", dest="generate_database",
+      default=False, help="generate an empty database, with the name_list given in \"-l\" [default: %default]")
+    parser.add_option("-l", "--name_list", type="string", dest="name_list",
+      default="sample_name_list", help="set the name_list file used to generate database [default: %default]")
     (options, args) = parser.parse_args()
 
     # load configuration file
     conf.load(options.conf_file)
-    print "load %s" % options.conf_file
+    print "load config %s" % options.conf_file
 
-    # webpy assumes the 1st param to be port
-    sys.argv = [sys.argv[0], options.bind]
+    # init database
+    data.init(conf.db_file)
+
+    # generate an empty database
+    if options.generate_database:
+        data.generate(options.name_list)
+        # clear the activity log
+        with open(conf.log_file, "w") as logfile:
+            pass
+        print "generate database with %s" % options.name_list
+        print "clear activity log %s" % conf.log_file
+        sys.exit(0)
 
     # run webpy server
+    # webpy assumes the 1st param to be port
+    sys.argv = [sys.argv[0], options.bind]
     app = web.application(urls, globals())
     web.internalerror = web.debugerror
     app.run()

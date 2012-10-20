@@ -2,14 +2,14 @@
 
 import sys
 from kirbybase import *
-import conf
 
-balance_table = conf.db_file
+balance_table = ""
 db = KirbyBase()
 
 def init(db_file):
     global balance_table
     balance_table = db_file
+    print "load database %s" % db_file
 
 def batch_update(recs):
     for rec in recs:
@@ -40,34 +40,27 @@ def get(recno):
         print >>sys.stderr, "[WARNNING]", e
         return None
 
-
-if __name__=="__main__":
-    #db = KirbyBase()
+def generate(name_list):
     try:
         db.drop(balance_table)
     except OSError:
         pass
     except KBError as e:
-        print "WARNNING:", e
-        sys.exit(1)
+        print >>sys.stderr, "WARNNING:", e
+        return
 
     try:
         db.create(balance_table, ['id:str', 'name:str', 'balance:float'])
     except KBError as e:
-        print "WARNNING:", e
-        sys.exit(2)
+        print >>sys.stderr, "WARNNING:", e
+        return
 
-    if len(sys.argv) < 2:
-        db.close()
-        sys.exit(0)
-
-    # initial database
-    name_list = sys.argv[1]
-    with open(name_list, "r") as namefile:
-        for line in namefile.readlines():
-            items = line.split('\t')
-            id = items[0]
-            name = items[1].strip()
-            db.insert(balance_table, [id, name, 0.0])
-
-    db.close()
+    if name_list and len(name_list) > 0:
+        # initialize database
+        with open(name_list, "r") as namefile:
+            for line in namefile.readlines():
+                items = line.split('\t')
+                id = items[0]
+                name = items[1].strip()
+                db.insert(balance_table, [id, name, 0.0])
+    
