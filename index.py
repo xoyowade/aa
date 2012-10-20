@@ -2,12 +2,15 @@
 
 """ AA accounting system """
 
-import data
-import web
-import time
-import utils
 import sys
-from time import strftime
+from optparse import OptionParser
+from time import strftime, localtime
+
+import web
+
+import conf
+import data
+import utils
 
 ### Url mappings
 
@@ -18,7 +21,7 @@ urls = (
     '/log', 'Log',
 )
 
-#render = web.template.render('templates', base='base')
+render = web.template.render('templates', base='base')
 
 class Record(object): pass
 
@@ -26,8 +29,8 @@ class New:
 
     class Info:
         def __init__(self):
-            self.date = strftime("%Y-%m-%d", time.localtime())
-            if time.localtime().tm_hour < 15:
+            self.date = strftime("%Y-%m-%d", localtime())
+            if localtime().tm_hour < 15:
                 self.am = "AM"
             else:
                 self.am = "PM"
@@ -109,19 +112,27 @@ class Log:
     def GET(self): 
         web.header('Content-type','text/html; charset=utf-8')
         web.header('Transfer-Encoding','chunked')
-        with open(utils.log_file, "r+") as logfile:
+        with open(conf.log_file, "r+") as logfile:
             for line in logfile.xreadlines():
                 yield line + "</br>"
 
 if __name__=="__main__":
-    # load configuration
-    if len(sys.argv) > 2:
-        conf_file = sys.argv[2]
-    else:
-        conf_file = 'aa.yml'
-    conf.load(conf_file)
-    print "load %s" % conf_file
+    # load parameters
+    parser = OptionParser()
+    parser.add_option("-b", "--bind", type="string", dest="bind",
+      default="0.0.0.0:8080", help="set ip and port to bind [default: %default]")
+    parser.add_option("-c", "--config", type="string", dest="conf_file",
+      default="aa.yml", help="set path to the configuration file [default: %default]")
+    (options, args) = parser.parse_args()
 
+    # load configuration file
+    conf.load(options.conf_file)
+    print "load %s" % options.conf_file
+
+    # webpy assumes the 1st param to be port
+    sys.argv = [sys.argv[0], options.bind]
+
+    # run webpy server
     app = web.application(urls, globals())
     web.internalerror = web.debugerror
     app.run()

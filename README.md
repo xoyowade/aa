@@ -26,7 +26,12 @@ python data.py $NAME_LIST_FILE
 
 1. Create your own configuration based on `aa.yml`.
 
-2. Run server. `PORT` and `CONFIG_FILE` are both optional, with default value `8080` and `aa.yml` separately. 
+2. Run server by  
 ```
-python index.py $PORT $CONFIG_FILE &>$AA_LOG &
+python index.py
+```
+
+3. See all available options by  
+```
+python index.py -h
 ```
