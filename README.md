@@ -19,7 +19,7 @@ AA accounting system comes out to help a constant group of people to record thei
 
 2. Initialize database with the name list, which would clear all the old data in database and activity log.   
 ```
-python index.py -g -l <path-to-name-list-file>
+python main.py -g -l <path-to-name-list-file>
 ```
 
 # Run Server
@@ -28,10 +28,10 @@ python index.py -g -l <path-to-name-list-file>
 
 2. Run server by  
 ```
-python index.py
+python main.py
 ```
 
 3. See all available options by  
 ```
-python index.py -h
+python main.py -h
 ```
